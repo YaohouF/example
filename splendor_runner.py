@@ -41,6 +41,7 @@ def loadAgent(file_list,name_list,superQuiet = True):
             traceback.print_exc()
             pass
         except:
+            traceback.print_exc()
             pass
 
         # if student's agent does not exist, use random agent.
@@ -63,16 +64,21 @@ class HidePrint:
         self.file_path = file_path
         self.f_name = f_name
         self._original_stdout = sys.stdout
+        self._original_stderr = sys.stderr
 
     def __enter__(self):
         if self.flag:
             if not os.path.exists(self.file_path):
                 os.makedirs(self.file_path)
+            print(self.file_path)
             sys.stdout = open(self.file_path+"/log-"+self.f_name+".log", 'w')
             sys.stderr = sys.stdout
         else:
-            sys.stdout = open(os.devnull, 'w')
-            sys.stderr = sys.stdout
+            # sys.stdout = open(os.devnull, 'w')
+            # sys.stderr = sys.stdout
+            sys.stdout = self._original_stdout
+            sys.stderr = self._original_stderr
+
 
     # Restore
     def __exit__(self, exc_type, exc_val, exc_tb):
@@ -264,7 +270,7 @@ def loadParameter():
     parser.add_option('-l','--saveLog', action='store_true',help='Writes agent printed information into a log file(named by the time they were played)', default=False)
     parser.add_option('--replay', default=None, help='Replays a recorded game file by a relative path')
     parser.add_option('--delay', type='float', help='Delay action in a play or replay by input (float) seconds (default 0.1)', default=0.1)
-    parser.add_option('-p','--print', action='store_true', help='Print all the output in terminal when playing games, will diable \'-l\' automatically. (default: False)', default=False)
+    parser.add_option('-p','--print', action='store_true', help='Print all the output in terminal when playing games, will disable \'-l\' automatically. (default: False)', default=False)
     parser.add_option('--half-scale', action='store_true', help='Display game at half-scale (default is 1920x1080)', default=False)
     parser.add_option('--interactive', action='store_true', help="Gives the user control over the Citrine agent's actions", default=False)   
     parser.add_option('--no-highlighting', action='store_true', help="Disables highlighting of potential card purchases", default=False)
