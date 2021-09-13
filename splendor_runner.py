@@ -70,7 +70,6 @@ class HidePrint:
         if self.flag:
             if not os.path.exists(self.file_path):
                 os.makedirs(self.file_path)
-            print(self.file_path)
             sys.stdout = open(self.file_path+"/log-"+self.f_name+".log", 'w')
             sys.stderr = sys.stdout
         else:

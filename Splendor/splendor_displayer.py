@@ -486,10 +486,13 @@ class TextDisplayer(Displayer):
     def StartRound(self,game_state):
         pass    
 
+    def _DisplayState(self,game_state):
+        pass
+
     def ExcuteAction(self,i,move, game_state):
         plr_state = game_state.agents[i]
         print("\nAgent {} has chosen the following move:".format(i))
-        print(ActionToString(i, move, game_state.board.new_seq))
+        print(ActionToString(i, move))
         print("\n")
         print("The new agent state is:")
         print(AgentToString(i, plr_state))

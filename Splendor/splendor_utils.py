@@ -184,6 +184,9 @@ def ActionToString(agent_id, action):
 
 def AgentToString(agent_id, ps):
     desc = "Agent #{} has scored {} points thus far.\n".format(agent_id, ps.score)
+    desc += f"gems: {ps.gems}\n"
+    desc += f"cards: {ps.cards}\n"
+    desc += f"nobles: {ps.nobles}\n"
     return desc
 
 def BoardToString(game_state):
